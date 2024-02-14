@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Dispatch, SetStateAction } from "react";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,20 +22,19 @@ import { Button } from "../ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
 import { Calendar } from "../ui/calendar";
+import { TCartItem } from "@/redux/features/cart/cart.slice";
 
 type TProps = {
-  productId: string;
-  setOpen?: Dispatch<SetStateAction<boolean>>;
-  maxQnt: number;
+  items: TCartItem[];
 };
 
 type TFormSchema = z.infer<typeof saleValidationSchema>;
 
-const SaleForm = ({ productId, setOpen, maxQnt }: TProps) => {
+const SaleForm = ({ items }: TProps) => {
   const form = useForm<TFormSchema>({
     defaultValues: {
       buyerName: "",
-      quantity: 1,
+      contactNo: "",
       dateOfSale: new Date(),
     },
     resolver: zodResolver(saleValidationSchema),
@@ -50,13 +48,17 @@ const SaleForm = ({ productId, setOpen, maxQnt }: TProps) => {
     const data = {
       ...form.getValues(),
       dateOfSale: form.getValues().dateOfSale.toISOString(),
-      product: productId,
+      products: items.map((item) => ({
+        product: item.product._id,
+        price: item.price,
+        quantity: item.quantity,
+      })),
     };
+
+    console.log(data);
 
     try {
       await createSale(data);
-
-      if (setOpen) setOpen(false);
 
       toast.success("Sale created.", { id: loadingToastId });
     } catch (error: any) {
@@ -89,18 +91,12 @@ const SaleForm = ({ productId, setOpen, maxQnt }: TProps) => {
 
           <FormField
             control={form.control}
-            name="quantity"
+            name="contactNo"
             render={({ field }) => (
               <FormItem className="flex-1 min-w-32">
-                <FormLabel>Quantity</FormLabel>
+                <FormLabel>Contact No</FormLabel>
                 <FormControl>
-                  <Input
-                    min={1}
-                    max={maxQnt}
-                    type="number"
-                    placeholder="quantity"
-                    {...field}
-                  />
+                  <Input type="string" placeholder="contact no" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -1,3 +1,4 @@
+import SaleForm from "@/components/forms/SaleForm";
 import CartItem from "@/components/shared/CartItem";
 import { Button } from "@/components/ui/button";
 import { useAppSelector } from "@/redux/hooks";
@@ -9,8 +10,8 @@ const CheckoutPage = () => {
   return (
     <div className="pt-16 p-2">
       <h1 className="text-2xl font-semibold mb-2">Checkout</h1>
-      <div className="flex items-start gap-3">
-        <div className="border flex-1 border-black space-y-2 p-2">
+      <div className="grid grid-cols-3 gap-2 items-start">
+        <div className="border col-span-2 border-black space-y-2 p-2">
           {cart.length > 0 ? (
             cart.map((item) => (
               <CartItem key={item.product._id.toString()} item={item} />
@@ -28,6 +29,11 @@ const CheckoutPage = () => {
             </div>
           )}
         </div>
+        {cart.length > 0 && (
+          <div className="border border-black p-2">
+            <SaleForm items={cart} />
+          </div>
+        )}
       </div>
     </div>
   );
