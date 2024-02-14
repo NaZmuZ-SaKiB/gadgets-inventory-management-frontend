@@ -31,13 +31,20 @@ const cartSlice = createSlice({
         isAlreadyInCart.quantity = isAlreadyInCart.quantity + 1;
 
         state.cart[index] = isAlreadyInCart;
+      } else if (
+        isAlreadyInCart &&
+        isAlreadyInCart.product.quantity === isAlreadyInCart.quantity
+      ) {
+        return;
       } else {
         state.cart.push(action.payload);
       }
     },
 
     removeFromCart: (state, action: PayloadAction<string>) => {
-      state.cart.filter((item) => item.product._id !== action.payload);
+      state.cart = state.cart.filter(
+        (item) => item.product._id !== action.payload
+      );
     },
 
     decreaseQuantity: (state, action: PayloadAction<string>) => {
@@ -52,7 +59,11 @@ const cartSlice = createSlice({
 
         state.cart[index] = isAlreadyInCart;
       } else {
-        state.cart.filter((item) => item.product._id !== action.payload);
+        console.log("inside else");
+
+        state.cart = state.cart.filter(
+          (item) => item.product._id !== action.payload
+        );
       }
     },
 
