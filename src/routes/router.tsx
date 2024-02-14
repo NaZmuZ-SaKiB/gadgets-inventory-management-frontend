@@ -10,6 +10,7 @@ import UpdateProductPage from "@/pages/UpdateProduct.tsx";
 import DuplicateProduct from "@/pages/DuplicateProduct.tsx";
 import SalesPage from "@/pages/Sales.tsx";
 import Dashboard from "@/pages/Dashboard.tsx";
+import CheckoutPage from "@/pages/Checkout.tsx";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "/sales",
         element: <SalesPage />,
+      },
+      {
+        path: "/checkout",
+        element: <CheckoutPage />,
       },
     ],
   },

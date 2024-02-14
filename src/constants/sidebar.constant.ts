@@ -23,4 +23,8 @@ export const sideBarRoutes: { path: string; label: string }[] = [
     path: "/brand",
     label: "Brand",
   },
+  {
+    path: "/checkout",
+    label: "Checkout",
+  },
 ];
