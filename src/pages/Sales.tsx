@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 import { useGetAllSalesQuery } from "@/redux/features/sale/sale.api";
 import { TSale } from "@/types/sale.interface";
@@ -86,10 +85,10 @@ const SalesPage = () => {
       </div>
 
       <div className="mt-3">
-        <div className="text-sm p-2 font-semibold border rounded-md mb-1 bg-gray-50 border-gray-300 grid gap-3 grid-cols-7">
-          <span>Buyer</span>
-          <span className="col-span-3">Product</span>
-          <span className="text-center">Quantity</span>
+        <div className="text-sm p-2 font-semibold border rounded-md mb-1 bg-gray-50 border-gray-300 grid gap-3 grid-cols-6">
+          <span className="col-span-2">Buyer Name</span>
+          <span className="text-center">Items</span>
+          <span className="text-center">Price</span>
           <span className="text-right col-span-2">Date</span>
         </div>
         {isLoading ? (
@@ -103,18 +102,15 @@ const SalesPage = () => {
           data?.data?.sales?.map((sale: TSale) => (
             <div
               key={sale._id.toString()}
-              className="text-sm p-2 border rounded-md mb-1 border-gray-300 grid gap-3 grid-cols-7"
+              className="text-sm p-2 border rounded-md mb-1 border-gray-300 grid gap-3 grid-cols-6"
             >
-              <span>{sale.buyerName}</span>
-              <Link
-                to={`/product/${sale.product._id}`}
-                className="hover:underline col-span-3 max-md:underline"
-              >
-                <span>{sale.product.name}</span>
-              </Link>
-              <span className="text-center">{sale.quantity}</span>
+              <span className="col-span-2">{sale.buyerName}</span>
+
+              <span className="text-center">{sale.products.length}</span>
+
+              <span className="text-center">{sale.total}/-</span>
               <span className="text-right col-span-2">
-                {new Date(sale.dateOfSale).toDateString()}
+                {new Date(sale.dateOfSale).toLocaleDateString()}
               </span>
             </div>
           ))

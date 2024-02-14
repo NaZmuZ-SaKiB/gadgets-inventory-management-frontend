@@ -1,9 +1,13 @@
-import { TProduct } from "./product.interface";
-
 export type TSale = {
   _id: string;
   buyerName: string;
-  quantity: number;
+  contactNo: string;
+  soldBy: string;
   dateOfSale: Date;
-  product: TProduct;
+  products: {
+    product: string;
+    quantity: number;
+    price: number;
+  }[];
+  total: number;
 };
