@@ -8,7 +8,6 @@ import { TProduct } from "@/types/product.interface";
 import { useDeleteProductsMutation } from "@/redux/features/product/product.api";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import SaleModal from "../shared/SaleModal";
 
 import {
   AlertDialog,
@@ -21,6 +20,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { addToCart } from "@/redux/features/cart/cart.slice";
 
 type TProps = {
   product: TProduct;
@@ -28,6 +29,12 @@ type TProps = {
 };
 
 const ProductCard = ({ product, handleSelect }: TProps) => {
+  const cart = useAppSelector((state) => state.cart.cart);
+
+  const isAddedToCart = cart.find((item) => item.product._id === product._id);
+
+  const dispatch = useAppDispatch();
+
   const [deleteProduct] = useDeleteProductsMutation();
 
   const handleDelete = async () => {
@@ -70,10 +77,26 @@ const ProductCard = ({ product, handleSelect }: TProps) => {
         </div>
       </div>
       <div className="mt-2 flex items-center justify-between p-2">
-        <SaleModal
-          productId={product._id.toString()}
-          maxQnt={product.quantity}
-        />
+        <Button
+          disabled={isAddedToCart ? true : false}
+          size="sm"
+          onClick={() =>
+            dispatch(addToCart({ price: product.price, quantity: 1, product }))
+          }
+        >
+          <div className="flex items-center gap-1">
+            <img
+              className="size-5"
+              src="/assets/icons/cart.svg"
+              alt="add to cart"
+            />
+            {isAddedToCart ? (
+              <span className="text-white text-lg">&#x2713;</span>
+            ) : (
+              <span className="text-white text-lg">+</span>
+            )}
+          </div>
+        </Button>
         <Link to={`/product/${product._id}`}>
           <Button size="icon" variant="outline">
             <img className="size-5" src="/assets/icons/edit.svg" alt="edit" />
