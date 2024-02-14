@@ -22,7 +22,8 @@ import { Button } from "../ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
 import { Calendar } from "../ui/calendar";
-import { TCartItem } from "@/redux/features/cart/cart.slice";
+import { TCartItem, clearCart } from "@/redux/features/cart/cart.slice";
+import { useAppDispatch } from "@/redux/hooks";
 
 type TProps = {
   items: TCartItem[];
@@ -31,6 +32,8 @@ type TProps = {
 type TFormSchema = z.infer<typeof saleValidationSchema>;
 
 const SaleForm = ({ items }: TProps) => {
+  const dispatch = useAppDispatch();
+
   const form = useForm<TFormSchema>({
     defaultValues: {
       buyerName: "",
@@ -59,7 +62,7 @@ const SaleForm = ({ items }: TProps) => {
 
     try {
       await createSale(data);
-
+      dispatch(clearCart());
       toast.success("Sale created.", { id: loadingToastId });
     } catch (error: any) {
       toast.error(error?.data?.message ?? "Something went wrong!", {
