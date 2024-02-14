@@ -14,17 +14,25 @@ import {
 import authSlice from "./features/auth/auth.slice";
 import baseApi from "./api/baseApi";
 import productSlice from "./features/product/product.slice";
+import cartSlice from "./features/cart/cart.slice";
 
 const persistConfig = {
   key: "auth",
   storage: storage,
 };
 
+const persistConfigCart = {
+  key: "cart",
+  storage: storage,
+};
+
 const persistedAuthReducer = persistReducer(persistConfig, authSlice);
+const persistedCartReducer = persistReducer(persistConfigCart, cartSlice);
 
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
+    cart: persistedCartReducer,
     product: productSlice,
     [baseApi.reducerPath]: baseApi.reducer,
   },

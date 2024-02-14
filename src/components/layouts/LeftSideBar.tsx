@@ -9,6 +9,7 @@ import { logout } from "@/redux/features/auth/auth.slice";
 
 import { sideBarRoutes } from "@/constants/sidebar.constant";
 import { Button } from "../ui/button";
+import { clearCart } from "@/redux/features/cart/cart.slice";
 
 type TProps = {
   hidden: boolean;
@@ -26,6 +27,7 @@ const LeftSideBar = ({ hidden, setHidden }: TProps) => {
     try {
       await logoutFromServer(undefined);
       dispatch(logout());
+      dispatch(clearCart());
       toast.success("logged out");
       navigate("/login", { replace: true });
     } catch (error: any) {
