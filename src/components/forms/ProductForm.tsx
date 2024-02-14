@@ -88,7 +88,7 @@ const ProductForm = ({ product, type }: TProps) => {
     quantity: product?.quantity || 0,
     cost: product?.cost || 0,
     price: product?.price || 0,
-    imgUrl: product?.imgUrl || undefined,
+    imgUrl: product?.imgUrl || "",
     description: product?.description || "",
     releaseDate: product?.releaseDate
       ? new Date(product.releaseDate)
@@ -244,7 +244,7 @@ const ProductForm = ({ product, type }: TProps) => {
           name="imgUrl"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Image URL (optional)</FormLabel>
+              <FormLabel>Image URL</FormLabel>
               <FormControl>
                 <Input placeholder="imgUrl" {...field} />
               </FormControl>

@@ -7,7 +7,7 @@ export const productValidationSchema = z.object({
   quantity: z.coerce.number().min(1),
   cost: z.coerce.number().min(0),
   price: z.coerce.number().min(0),
-  imgUrl: z.string().url().optional(),
+  imgUrl: z.string().url(),
   description: z.string().min(3),
   brand: z.string(),
   category: z.string(),

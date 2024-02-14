@@ -8,16 +8,18 @@ const authApi = baseApi.injectEndpoints({
         method: "POST",
         body: credentials,
       }),
-      invalidatesTags: ["auth"],
+      invalidatesTags: ["auth", "products", "sales"],
     }),
+
     signup: builder.mutation({
       query: (userInfo) => ({
         url: "/users/sign-up",
         method: "POST",
         body: userInfo,
       }),
-      invalidatesTags: ["auth"],
+      invalidatesTags: ["auth", "products", "sales"],
     }),
+
     isLoggedIn: builder.query({
       query: () => ({
         url: "/users/status",
@@ -31,7 +33,7 @@ const authApi = baseApi.injectEndpoints({
         url: "/users/sign-out",
         method: "POST",
       }),
-      invalidatesTags: ["auth"],
+      invalidatesTags: ["auth", "products", "sales"],
     }),
   }),
 });
