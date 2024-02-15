@@ -3,11 +3,14 @@ import { Dispatch, SetStateAction } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useLogoutMutation } from "@/redux/features/auth/auth.api";
 import { logout } from "@/redux/features/auth/auth.slice";
 
-import { sideBarRoutes } from "@/constants/sidebar.constant";
+import {
+  sideBarRoutesManager,
+  sideBarRoutesUser,
+} from "@/constants/sidebar.constant";
 import { Button } from "../ui/button";
 import { clearCart } from "@/redux/features/cart/cart.slice";
 
@@ -17,6 +20,15 @@ type TProps = {
 };
 
 const LeftSideBar = ({ hidden, setHidden }: TProps) => {
+  const role = useAppSelector((state) => state.auth.user?.role);
+
+  let sideBarItems;
+  if (role === "user") {
+    sideBarItems = sideBarRoutesUser;
+  } else {
+    sideBarItems = sideBarRoutesManager;
+  }
+
   const dispatch = useAppDispatch();
   const [logoutFromServer] = useLogoutMutation();
 
@@ -45,7 +57,7 @@ const LeftSideBar = ({ hidden, setHidden }: TProps) => {
       )}
       <div className={`left-sidebar ${hidden ? "max-md:-left-full" : ""}`}>
         <div className="flex flex-col gap-2">
-          {sideBarRoutes.map((item) => (
+          {sideBarItems.map((item) => (
             <NavLink
               onClick={() => setHidden(true)}
               to={item.path}

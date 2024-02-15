@@ -11,6 +11,8 @@ import DuplicateProduct from "@/pages/DuplicateProduct.tsx";
 import SalesPage from "@/pages/Sales.tsx";
 import Dashboard from "@/pages/Dashboard.tsx";
 import CheckoutPage from "@/pages/Checkout.tsx";
+import UserManagementPage from "@/pages/UserManagement.tsx";
+import ProtectedRoute from "@/components/layouts/ProtectedRoute.tsx";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +54,14 @@ const router = createBrowserRouter([
       {
         path: "/checkout",
         element: <CheckoutPage />,
+      },
+      {
+        path: "/users",
+        element: (
+          <ProtectedRoute role={["manager"]}>
+            <UserManagementPage />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

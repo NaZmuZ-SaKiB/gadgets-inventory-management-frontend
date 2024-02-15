@@ -4,9 +4,15 @@ import { useNavigate } from "react-router-dom";
 import config from "@/config";
 import Spinner from "../shared/Spinner";
 import { useAppDispatch } from "@/redux/hooks";
-import { setUser } from "@/redux/features/auth/auth.slice";
+import { logout, setUser } from "@/redux/features/auth/auth.slice";
 
-const ProtectedRoute = ({ children }: { children: ReactNode }) => {
+const ProtectedRoute = ({
+  children,
+  role,
+}: {
+  children: ReactNode;
+  role: ("user" | "manager")[];
+}) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -18,10 +24,11 @@ const ProtectedRoute = ({ children }: { children: ReactNode }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data?.success) {
+        if (data?.success && role.includes(data?.data?.role)) {
           dispatch(setUser(data.data));
           setLoading(false);
         } else {
+          dispatch(logout());
           navigate("/login", { replace: true });
         }
       })
@@ -33,8 +40,10 @@ const ProtectedRoute = ({ children }: { children: ReactNode }) => {
 
   if (isLoading)
     return (
-      <div className="size-16 flex justify-center items-center">
-        <Spinner className="border-y-black" />
+      <div className=" flex justify-center items-center h-[100svh]">
+        <div className="size-16">
+          <Spinner className="border-y-black" />
+        </div>
       </div>
     );
   return <>{children}</>;

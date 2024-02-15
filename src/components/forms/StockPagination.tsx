@@ -25,6 +25,7 @@ const StockPagination = ({ total }: TProps) => {
       <PaginationContent className="mt-10">
         <PaginationItem hidden={filter.page === 1}>
           <PaginationPrevious
+            className="cursor-pointer"
             onClick={() =>
               dispatch(
                 setFilter({ value: Number(filter.page) - 1, field: "page" })
@@ -50,6 +51,7 @@ const StockPagination = ({ total }: TProps) => {
 
         <PaginationItem hidden={filter.page === totalPages}>
           <PaginationNext
+            className="cursor-pointer"
             onClick={() =>
               dispatch(
                 setFilter({ value: Number(filter.page) + 1, field: "page" })

@@ -17,7 +17,7 @@ const LastSales = () => {
       <div className="text-sm p-2 font-semibold bg-blue-500 text-white rounded-md grid gap-3 grid-cols-6 mb-2">
         <span className="col-span-2">Buyer Name</span>
         <span className="text-center">Items</span>
-        <span className="text-center">Quantity</span>
+        <span className="text-center">Amount</span>
         <span className="text-right col-span-2">Date</span>
       </div>
       {isLoading

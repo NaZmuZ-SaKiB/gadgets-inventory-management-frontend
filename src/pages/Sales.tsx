@@ -39,7 +39,7 @@ const SalesPage = () => {
     setFilters(newFilters);
   };
 
-  const { data, isLoading } = useGetAllSalesQuery(filters);
+  const { currentData, isFetching } = useGetAllSalesQuery(filters);
 
   return (
     <div className="p-2 pt-16 max-sm:pt-14 relative max-w-4xl mx-auto">
@@ -88,10 +88,10 @@ const SalesPage = () => {
         <div className="text-sm p-2 font-semibold border rounded-md mb-1 bg-gray-50 border-gray-300 grid gap-3 grid-cols-6">
           <span className="col-span-2">Buyer Name</span>
           <span className="text-center">Items</span>
-          <span className="text-center">Price</span>
+          <span className="text-center">Amount</span>
           <span className="text-right col-span-2">Date</span>
         </div>
-        {isLoading ? (
+        {isFetching && !currentData ? (
           <>
             <Skeleton className="w-full h-10 mb-2 " />
             <Skeleton className="w-full h-10 mb-2 " />
@@ -99,7 +99,7 @@ const SalesPage = () => {
             <Skeleton className="w-full h-10 mb-2 " />
           </>
         ) : (
-          data?.data?.sales?.map((sale: TSale) => (
+          currentData?.data?.sales?.map((sale: TSale) => (
             <div
               key={sale._id.toString()}
               className="text-sm p-2 border rounded-md mb-1 border-gray-300 grid gap-3 grid-cols-6"
@@ -116,16 +116,17 @@ const SalesPage = () => {
           ))
         )}
       </div>
-      {!isLoading && data && (
+      {!isFetching && currentData && (
         <div>
           <Pagination>
             <PaginationContent className="mt-10">
               <PaginationItem hidden={filters.page === 1}>
                 <PaginationPrevious
+                  className="cursor-pointer"
                   onClick={() => handleFilterChange(filters.page - 1, "page")}
                 />
               </PaginationItem>
-              {Array(Math.ceil(data?.data?.total / filters.limit))
+              {Array(Math.ceil(currentData?.data?.total / filters.limit))
                 .fill(0)
                 .map((_, index) => (
                   <PaginationItem key={`paginatin-${index}`}>
@@ -141,10 +142,12 @@ const SalesPage = () => {
 
               <PaginationItem
                 hidden={
-                  filters.page === Math.ceil(data?.data?.total / filters.limit)
+                  filters.page ===
+                  Math.ceil(currentData?.data?.total / filters.limit)
                 }
               >
                 <PaginationNext
+                  className="cursor-pointer"
                   onClick={() => handleFilterChange(filters.page + 1, "page")}
                 />
               </PaginationItem>

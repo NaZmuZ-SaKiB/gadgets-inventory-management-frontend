@@ -58,7 +58,7 @@ const StockPage = () => {
     }
   );
 
-  const { data, isLoading } = useGetAllProductsQuery(filter, {
+  const { currentData, isFetching } = useGetAllProductsQuery(filter, {
     pollingInterval: 10000,
   });
 
@@ -126,7 +126,7 @@ const StockPage = () => {
         <div className="">
           <ProductsTopBar show={showFilters} setShow={setShowFilders} />
           <div className="mt-3 stock-grid">
-            {isLoading
+            {isFetching && !currentData
               ? Array(9)
                   .fill(0)
                   .map((_, index) => (
@@ -135,7 +135,7 @@ const StockPage = () => {
                       className="h-60"
                     />
                   ))
-              : data?.data?.products?.map((product: TProduct) => (
+              : currentData?.data?.products?.map((product: TProduct) => (
                   <ProductCard
                     product={product}
                     handleSelect={handleSelectedProducts}
@@ -143,7 +143,9 @@ const StockPage = () => {
                   />
                 ))}
           </div>
-          {!isLoading && data && <StockPagination total={data?.data?.total} />}
+          {!isFetching && currentData && (
+            <StockPagination total={currentData?.data?.total} />
+          )}
         </div>
       </div>
     </div>
