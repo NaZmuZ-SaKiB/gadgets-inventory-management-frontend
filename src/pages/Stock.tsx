@@ -143,7 +143,7 @@ const StockPage = () => {
                   />
                 ))}
           </div>
-          {!isFetching && currentData && (
+          {!isFetching && currentData?.data?.products?.length > 0 && (
             <StockPagination total={currentData?.data?.total} />
           )}
         </div>

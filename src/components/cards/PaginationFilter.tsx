@@ -28,7 +28,7 @@ const PaginationFilter = () => {
             <SelectItem value="createdAt">Oldest</SelectItem>
             <SelectItem value="price">Price low to high</SelectItem>
             <SelectItem value="-price">Price high to low</SelectItem>
-            <SelectItem value="quantity">Quantity high to low</SelectItem>
+            <SelectItem value="quantity">Quantity low to high</SelectItem>
             <SelectItem value="-quantity">Quantity high to low</SelectItem>
           </SelectContent>
         </Select>
