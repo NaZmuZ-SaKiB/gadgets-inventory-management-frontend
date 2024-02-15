@@ -44,6 +44,14 @@ const authApi = baseApi.injectEndpoints({
       }),
       providesTags: ["users"],
     }),
+
+    assignManager: builder.mutation({
+      query: (id: string) => ({
+        url: `/users/assign-manager/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["users"],
+    }),
   }),
 });
 
@@ -53,4 +61,5 @@ export const {
   useSignupMutation,
   useLogoutMutation,
   useGetAllUsersQuery,
+  useAssignManagerMutation,
 } = authApi;

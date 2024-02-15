@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import {
   Pagination,
@@ -8,9 +9,13 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetAllUsersQuery } from "@/redux/features/auth/auth.api";
+import {
+  useAssignManagerMutation,
+  useGetAllUsersQuery,
+} from "@/redux/features/auth/auth.api";
 import { TUser } from "@/types/user.interface";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const UserManagementPage = () => {
   const [filters, setFilters] = useState({
@@ -24,6 +29,28 @@ const UserManagementPage = () => {
   });
 
   console.log(currentData);
+
+  const [assignManager, { isLoading: isAssignManagerLoading }] =
+    useAssignManagerMutation();
+
+  const handleAssignManager = async (id: string) => {
+    const loadingToastId = toast.loading("Updating user role");
+
+    try {
+      await assignManager(id).unwrap();
+
+      toast.success("Manager Assigned", { id: loadingToastId });
+
+      if (currentData?.data?.users.length === 1 && filters.page > 1) {
+        setFilters({ ...filters, page: filters.page - 1 });
+      }
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.data?.message ?? "Simething went wrong!", {
+        id: loadingToastId,
+      });
+    }
+  };
 
   return (
     <div className="pt-16 p-2">
@@ -41,6 +68,10 @@ const UserManagementPage = () => {
           <Skeleton className="w-full h-10 mb-2 " />
           <Skeleton className="w-full h-10 mb-2 " />
         </>
+      ) : currentData?.data?.users?.length === 0 ? (
+        <div className="text-center text-xl font-semibold p-5 border  mt-4 rounded-md">
+          No Users
+        </div>
       ) : (
         currentData?.data?.users?.map((user: TUser) => (
           <div
@@ -51,13 +82,19 @@ const UserManagementPage = () => {
             <div className="col-span-2 text-center">{user.email}</div>
             <div className="col-span-1 text-center">{user.role}</div>
             <div className="col-span-1 text-right">
-              <Button size="sm">Make Manager</Button>
+              <Button
+                size="sm"
+                onClick={() => handleAssignManager(user._id.toString())}
+                disabled={isAssignManagerLoading}
+              >
+                {isAssignManagerLoading ? "Updating" : "Make Manager"}
+              </Button>
             </div>
           </div>
         ))
       )}
 
-      {!isFetching && currentData && (
+      {!isFetching && currentData?.data?.users?.length > 0 && (
         <div>
           <Pagination>
             <PaginationContent className="mt-10">
