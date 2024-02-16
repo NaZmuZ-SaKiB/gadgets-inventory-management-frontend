@@ -3,7 +3,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import config from "@/config";
 import Spinner from "../shared/Spinner";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setUser } from "@/redux/features/auth/auth.slice";
 import { TUserRole } from "@/types/user.interface";
 import { toast } from "sonner";
@@ -17,6 +17,7 @@ const ProtectedRoute = ({
 }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
 
   const [isLoading, setLoading] = useState<boolean>(true);
 
@@ -28,15 +29,22 @@ const ProtectedRoute = ({
       .then((data) => {
         if (data?.success && role.includes(data?.data?.role)) {
           dispatch(setUser(data.data));
-          setLoading(false);
         } else {
-          toast.error("You are not allowed to visit this page!");
-          navigate("/", { replace: true });
+          if (user) {
+            toast.error("You are not allowed to visit this page!");
+            navigate("/", { replace: true });
+          } else {
+            toast.error("Login to visit this page!");
+            navigate("/login", { replace: true });
+          }
         }
       })
       .catch(() => {
         setLoading(false);
         navigate("/login", { replace: true });
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
