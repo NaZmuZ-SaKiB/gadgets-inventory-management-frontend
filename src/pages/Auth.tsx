@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -9,7 +9,7 @@ import {
   useLoginMutation,
   useSignupMutation,
 } from "@/redux/features/auth/auth.api";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setUser } from "@/redux/features/auth/auth.slice";
 import {
   loginValidationSchema,
@@ -26,6 +26,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { USER_ROLE } from "@/constants/user.constant";
 
 type TFormSchema = z.infer<
   typeof loginValidationSchema | typeof signupValidationSchema
@@ -33,7 +41,7 @@ type TFormSchema = z.infer<
 
 const AuthenticationPage = () => {
   const { pathname } = useLocation();
-
+  const currentUserRole = useAppSelector((state) => state.auth.user?.role);
   const isLoginPage = pathname === "/login";
 
   const form = useForm<TFormSchema>({
@@ -55,7 +63,7 @@ const AuthenticationPage = () => {
 
   const onSubmit = async (values: TFormSchema) => {
     const loadingToastId = toast.loading(
-      isLoginPage ? "Logging in..." : "Signing up..."
+      isLoginPage ? "Logging in..." : "Creating user..."
     );
     try {
       let result: any;
@@ -65,13 +73,16 @@ const AuthenticationPage = () => {
         result = await signup(values).unwrap();
       }
 
-      dispatch(setUser(result?.data));
-
-      toast.success(isLoginPage ? "Logged in" : "Signup successful", {
+      toast.success(isLoginPage ? "Logged in" : "User created", {
         id: loadingToastId,
       });
 
-      navigate("/", { replace: true });
+      if (isLoginPage) {
+        dispatch(setUser(result?.data));
+        navigate("/", { replace: true });
+      } else {
+        form.reset();
+      }
     } catch (error: any) {
       console.log(error);
       toast.error(error?.data?.message ?? "Something went wrong!", {
@@ -84,7 +95,7 @@ const AuthenticationPage = () => {
     <div className="grid place-items-center w-full min-h-[100svh] p-2">
       <div className="max-w-sm w-full border rounded-lg p-4">
         <h1 className="text-2xl font-medium text-center mb-10">
-          {isLoginPage ? "Login" : "Sign up"}
+          {isLoginPage ? "Login" : "Create User"}
         </h1>
         <Form {...form}>
           <form
@@ -121,6 +132,36 @@ const AuthenticationPage = () => {
               )}
             />
 
+            {!isLoginPage && currentUserRole === USER_ROLE.ADMIN && (
+              <FormField
+                control={form.control}
+                name="role"
+                render={({ field }) => (
+                  <FormItem className="flex-1 min-w-36">
+                    <FormLabel>Role</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select Role" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {[USER_ROLE.MANAGER, USER_ROLE.USER].map((role) => (
+                          <SelectItem key={role} value={role}>
+                            {role}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+
             <FormField
               control={form.control}
               name="password"
@@ -136,24 +177,8 @@ const AuthenticationPage = () => {
             />
 
             <Button disabled={form.formState.isSubmitting} type="submit">
-              {isLoginPage ? "Login" : "Sign up"}
+              {isLoginPage ? "Login" : "Create User"}
             </Button>
-
-            {isLoginPage ? (
-              <p>
-                Do not have an account?{" "}
-                <Link className="text-blue-500 hover:underline" to={"/signup"}>
-                  sign up
-                </Link>
-              </p>
-            ) : (
-              <p>
-                Already have an account.{" "}
-                <Link className="text-blue-500 hover:underline" to={"/login"}>
-                  login
-                </Link>
-              </p>
-            )}
           </form>
         </Form>
       </div>
