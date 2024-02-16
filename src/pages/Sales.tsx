@@ -36,6 +36,9 @@ const SalesPage = () => {
 
   const handleFilterChange = (value: string | number, field: string) => {
     const newFilters = { ...filters, [field]: value };
+    if (field === "time") {
+      newFilters.page = 1;
+    }
     setFilters(newFilters);
   };
 
