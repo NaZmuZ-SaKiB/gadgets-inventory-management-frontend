@@ -123,7 +123,9 @@ const ProductForm = ({ product, type }: TProps) => {
   const [updateProduct] = useUpdateProductMutation();
 
   const onSubmit = async () => {
-    const loadingToastId = toast.loading("Creating new product");
+    const loadingToastId = toast.loading(
+      type === "update" ? "Updating product" : "Creating new product"
+    );
 
     const data: Record<string, unknown> = {
       ...form.getValues(),

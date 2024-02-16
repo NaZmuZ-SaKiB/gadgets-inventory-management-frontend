@@ -23,13 +23,20 @@ const productSlice = createSlice({
     selectProduct: (state, action) => {
       state.selected = Array.from(new Set([...state.selected, action.payload]));
     },
+    clearSelectedProducts: (state) => {
+      state.selected = [];
+    },
     removeSelectedProduct: (state, action) => {
       state.selected = state.selected.filter((item) => item !== action.payload);
     },
   },
 });
 
-export const { setFilter, selectProduct, removeSelectedProduct } =
-  productSlice.actions;
+export const {
+  setFilter,
+  selectProduct,
+  removeSelectedProduct,
+  clearSelectedProducts,
+} = productSlice.actions;
 
 export default productSlice.reducer;

@@ -2,7 +2,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "sonner";
 
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useDeleteProductsMutation } from "@/redux/features/product/product.api";
 
 import { Button } from "../ui/button";
@@ -18,6 +18,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import PaginationFilter from "../cards/PaginationFilter";
+import { clearSelectedProducts } from "@/redux/features/product/product.slice";
 
 type TProps = {
   show: boolean;
@@ -27,6 +28,8 @@ type TProps = {
 const ProductsTopBar = ({ setShow }: TProps) => {
   const selectedProducts = useAppSelector((state) => state.product.selected);
 
+  const dispatch = useAppDispatch();
+
   const [deleteProduct] = useDeleteProductsMutation();
 
   const handleDelete = async () => {
@@ -35,6 +38,7 @@ const ProductsTopBar = ({ setShow }: TProps) => {
     try {
       await deleteProduct(selectedProducts);
 
+      dispatch(clearSelectedProducts());
       toast.success("Products Deleted", { id: loadingToastId });
     } catch (error: any) {
       console.log(error);
