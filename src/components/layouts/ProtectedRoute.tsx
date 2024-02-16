@@ -4,14 +4,16 @@ import { useNavigate } from "react-router-dom";
 import config from "@/config";
 import Spinner from "../shared/Spinner";
 import { useAppDispatch } from "@/redux/hooks";
-import { logout, setUser } from "@/redux/features/auth/auth.slice";
+import { setUser } from "@/redux/features/auth/auth.slice";
+import { TUserRole } from "@/types/user.interface";
+import { toast } from "sonner";
 
 const ProtectedRoute = ({
   children,
   role,
 }: {
   children: ReactNode;
-  role: ("user" | "manager")[];
+  role: TUserRole[];
 }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -28,8 +30,8 @@ const ProtectedRoute = ({
           dispatch(setUser(data.data));
           setLoading(false);
         } else {
-          dispatch(logout());
-          navigate("/login", { replace: true });
+          toast.error("You are not allowed to visit this page!");
+          navigate("/", { replace: true });
         }
       })
       .catch(() => {
