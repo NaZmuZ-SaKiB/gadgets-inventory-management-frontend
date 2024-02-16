@@ -13,6 +13,7 @@ import Dashboard from "@/pages/Dashboard.tsx";
 import CheckoutPage from "@/pages/Checkout.tsx";
 import UserManagementPage from "@/pages/UserManagement.tsx";
 import ProtectedRoute from "@/components/layouts/ProtectedRoute.tsx";
+import { USER_ROLE } from "@/constants/user.constant.ts";
 
 const router = createBrowserRouter([
   {
@@ -56,10 +57,18 @@ const router = createBrowserRouter([
         element: <CheckoutPage />,
       },
       {
-        path: "/users",
+        path: "/user-management",
         element: (
-          <ProtectedRoute role={["manager"]}>
+          <ProtectedRoute role={[USER_ROLE.ADMIN]}>
             <UserManagementPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/create-user",
+        element: (
+          <ProtectedRoute role={[USER_ROLE.ADMIN, USER_ROLE.MANAGER]}>
+            <AuthenticationPage />,
           </ProtectedRoute>
         ),
       },
@@ -67,10 +76,6 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <AuthenticationPage />,
-  },
-  {
-    path: "/signup",
     element: <AuthenticationPage />,
   },
 ]);
