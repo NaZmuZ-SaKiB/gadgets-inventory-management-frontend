@@ -9,10 +9,12 @@ import { logout } from "@/redux/features/auth/auth.slice";
 
 import {
   sideBarRoutesManager,
-  sideBarRoutesUser,
+  commonSideBarRoutes,
+  sideBarRoutesAdmin,
 } from "@/constants/sidebar.constant";
 import { Button } from "../ui/button";
 import { clearCart } from "@/redux/features/cart/cart.slice";
+import { USER_ROLE } from "@/constants/user.constant";
 
 type TProps = {
   hidden: boolean;
@@ -23,10 +25,12 @@ const LeftSideBar = ({ hidden, setHidden }: TProps) => {
   const role = useAppSelector((state) => state.auth.user?.role);
 
   let sideBarItems;
-  if (role === "user") {
-    sideBarItems = sideBarRoutesUser;
-  } else {
+  if (role === USER_ROLE.USER) {
+    sideBarItems = commonSideBarRoutes;
+  } else if (role === USER_ROLE.MANAGER) {
     sideBarItems = sideBarRoutesManager;
+  } else {
+    sideBarItems = sideBarRoutesAdmin;
   }
 
   const dispatch = useAppDispatch();
