@@ -1,5 +1,5 @@
 import Spinner from "@/components/shared/Spinner";
-import { useGetAllSalesQuery } from "@/redux/features/sale/sale.api";
+import { useGetSalesCountQuery } from "@/redux/features/sale/sale.api";
 
 const SalesCard = ({
   time,
@@ -10,7 +10,7 @@ const SalesCard = ({
   title: string;
   className: string;
 }) => {
-  const { data, isLoading } = useGetAllSalesQuery(
+  const { data, isLoading } = useGetSalesCountQuery(
     { time },
     { pollingInterval: 10000 }
   );
@@ -26,7 +26,7 @@ const SalesCard = ({
             <Spinner className="border-y-white" />
           </div>
         ) : (
-          data?.data?.sales?.length
+          data?.data?.count
         )}
       </span>
     </div>

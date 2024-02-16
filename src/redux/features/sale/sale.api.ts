@@ -19,7 +19,20 @@ const saleApi = baseApi.injectEndpoints({
       }),
       providesTags: ["sales"],
     }),
+
+    getSalesCount: builder.query({
+      query: (filters) => ({
+        url: "/sales/count",
+        method: "GET",
+        params: filters,
+      }),
+      providesTags: ["sales"],
+    }),
   }),
 });
 
-export const { useCreateSaleMutation, useGetAllSalesQuery } = saleApi;
+export const {
+  useCreateSaleMutation,
+  useGetAllSalesQuery,
+  useGetSalesCountQuery,
+} = saleApi;
