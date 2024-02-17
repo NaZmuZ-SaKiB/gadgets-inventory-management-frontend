@@ -1,3 +1,5 @@
+import { TProduct } from "./product.interface";
+
 export type TSale = {
   _id: string;
   buyerName: string;
@@ -5,7 +7,7 @@ export type TSale = {
   soldBy: string;
   dateOfSale: Date;
   products: {
-    product: string;
+    product: TProduct;
     quantity: number;
     price: number;
   }[];
