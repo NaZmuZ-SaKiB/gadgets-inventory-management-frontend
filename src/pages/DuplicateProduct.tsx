@@ -20,7 +20,10 @@ const DuplicateProduct = () => {
         <h1 className="text-2xl font-medium text-center mb-10">
           Duplicate Product
         </h1>
-        <ProductForm type="duplicate" product={data?.data} />
+        <ProductForm
+          type="duplicate"
+          product={{ ...data?.data, name: data?.data?.name + " ( Duplicate )" }}
+        />
       </div>
     </div>
   );
