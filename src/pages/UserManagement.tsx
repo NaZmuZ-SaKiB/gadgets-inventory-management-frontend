@@ -30,7 +30,11 @@ const UserManagementPage = () => {
     pollingInterval: 10000,
   });
 
-  console.log(currentData);
+  const handleSerach = (value: string) => {
+    setTimeout(() => {
+      setFilters({ ...filters, search: value });
+    }, 300);
+  };
 
   const [assignManager, { isLoading: isAssignManagerLoading }] =
     useAssignManagerMutation();
@@ -57,6 +61,7 @@ const UserManagementPage = () => {
         type="text"
         placeholder="Search (name, email)"
         className="mb-3 w-72 max-w-[100%]"
+        onChange={(e) => handleSerach(e.target.value)}
       />
       <div className="grid grid-cols-4 sm:grid-cols-6 text-sm rounded-md border bg-gray-50 px-3 py-2 font-semibold">
         <div className="col-span-2 hidden sm:block">Name</div>
