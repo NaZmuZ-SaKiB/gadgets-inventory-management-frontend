@@ -69,11 +69,11 @@ const ProductCard = ({ product, handleSelect }: TProps) => {
         </div>
         <div className="p-2 text-sm">
           <Link to={`/product/${product._id}`}>
-            <h2 className="font-semibold mb-2">{product.name}</h2>
+            <h2 className="font-medium mb-2 text-blue-500">{product.name}</h2>
           </Link>
           <p>Quantity: {product.quantity}</p>
-          <p>Cost: {product.cost}</p>
-          <p>Price: {product.price}</p>
+          <p>Cost: {product.cost}/-</p>
+          <p>Price: {product.price}/-</p>
         </div>
       </div>
       <div className="mt-2 flex items-center justify-between p-2">
