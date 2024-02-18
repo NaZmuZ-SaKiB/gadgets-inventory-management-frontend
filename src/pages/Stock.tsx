@@ -126,22 +126,28 @@ const StockPage = () => {
         <div className="">
           <ProductsTopBar show={showFilters} setShow={setShowFilders} />
           <div className="mt-3 stock-grid">
-            {isFetching && !currentData
-              ? Array(9)
-                  .fill(0)
-                  .map((_, index) => (
-                    <Skeleton
-                      key={`product-card-loading-${index}`}
-                      className="h-60"
-                    />
-                  ))
-              : currentData?.data?.products?.map((product: TProduct) => (
-                  <ProductCard
-                    product={product}
-                    handleSelect={handleSelectedProducts}
-                    key={product._id.toString()}
+            {isFetching && !currentData ? (
+              Array(9)
+                .fill(0)
+                .map((_, index) => (
+                  <Skeleton
+                    key={`product-card-loading-${index}`}
+                    className="h-60"
                   />
-                ))}
+                ))
+            ) : currentData?.data?.products?.length > 0 ? (
+              currentData?.data?.products?.map((product: TProduct) => (
+                <ProductCard
+                  product={product}
+                  handleSelect={handleSelectedProducts}
+                  key={product._id.toString()}
+                />
+              ))
+            ) : (
+              <div className="mt-10 text-center border-2 p-3 text-lg font-semibold border-black">
+                Stock is empty
+              </div>
+            )}
           </div>
           {!isFetching && currentData?.data?.products?.length > 0 && (
             <StockPagination total={currentData?.data?.total} />

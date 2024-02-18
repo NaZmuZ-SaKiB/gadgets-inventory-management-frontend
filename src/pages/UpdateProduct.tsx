@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "@/redux/features/product/product.api";
 import ProductForm from "@/components/forms/ProductForm";
+import Spinner from "@/components/shared/Spinner";
 
 const UpdateProductPage = () => {
   const { productId } = useParams();
@@ -13,8 +14,10 @@ const UpdateProductPage = () => {
 
   if (isLoading)
     return (
-      <div className=" pt-16">
-        <h1 className="text-2xl font-medium text-center mb-10">Loading...</h1>
+      <div className=" flex justify-center items-center h-[100svh]">
+        <div className="size-16">
+          <Spinner className="border-y-black" />
+        </div>
       </div>
     );
 

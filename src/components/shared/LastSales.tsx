@@ -20,30 +20,36 @@ const LastSales = () => {
         <span className="text-center">Amount</span>
         <span className="text-right col-span-2">Date</span>
       </div>
-      {isLoading
-        ? Array(5)
-            .fill(0)
-            .map((_, index) => (
-              <Skeleton
-                key={`last-sales-loader-${index}`}
-                className="w-full h-10 mb-2 bg-blue-300"
-              />
-            ))
-        : data?.data?.sales?.map((sale: TSale) => (
-            <div
-              key={sale._id.toString()}
-              className="text-sm p-2 rounded-md bg-blue-100 mb-2 grid gap-3 grid-cols-6"
-            >
-              <span className="col-span-2">{sale.buyerName}</span>
+      {isLoading ? (
+        Array(5)
+          .fill(0)
+          .map((_, index) => (
+            <Skeleton
+              key={`last-sales-loader-${index}`}
+              className="w-full h-10 mb-2 bg-blue-300"
+            />
+          ))
+      ) : data?.data?.sales.length > 0 ? (
+        data?.data?.sales?.map((sale: TSale) => (
+          <div
+            key={sale._id.toString()}
+            className="text-sm p-2 rounded-md bg-blue-100 mb-2 grid gap-3 grid-cols-6"
+          >
+            <span className="col-span-2">{sale.buyerName}</span>
 
-              <span className="text-center">{sale.products.length}</span>
+            <span className="text-center">{sale.products.length}</span>
 
-              <span className="text-center">{sale.total}</span>
-              <span className="text-right col-span-2">
-                {new Date(sale.dateOfSale).toLocaleDateString()}
-              </span>
-            </div>
-          ))}
+            <span className="text-center">{sale.total}</span>
+            <span className="text-right col-span-2">
+              {new Date(sale.dateOfSale).toLocaleDateString()}
+            </span>
+          </div>
+        ))
+      ) : (
+        <div className="text-center border-2 p-3 text-lg font-semibold text-blue-600 bg-blue-100 border-blue-500">
+          No items
+        </div>
+      )}
     </div>
   );
 };

@@ -117,7 +117,7 @@ const SalesPage = () => {
               <Skeleton className="w-full h-10 mb-2 " />
               <Skeleton className="w-full h-10 mb-2 " />
             </>
-          ) : (
+          ) : currentData?.data?.sales?.length > 0 ? (
             currentData?.data?.sales?.map((sale: TSale) => (
               <div
                 key={sale._id.toString()}
@@ -134,9 +134,13 @@ const SalesPage = () => {
                 </span>
               </div>
             ))
+          ) : (
+            <div className="mt-5 text-center border-2 p-3 text-lg font-semibold">
+              No sales yet
+            </div>
           )}
         </div>
-        {!isFetching && currentData && (
+        {!isFetching && currentData?.data?.sales?.length > 0 && (
           <div>
             <Pagination>
               <PaginationContent className="mt-10">

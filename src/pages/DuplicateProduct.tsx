@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { useGetProductByIdQuery } from "@/redux/features/product/product.api";
 import ProductForm from "@/components/forms/ProductForm";
+import Spinner from "@/components/shared/Spinner";
 
 const DuplicateProduct = () => {
   const { productId } = useParams();
@@ -12,7 +13,15 @@ const DuplicateProduct = () => {
 
   const { data, isLoading } = useGetProductByIdQuery(productId as string);
 
-  if (isLoading) return null;
+  if (isLoading) {
+    return (
+      <div className=" flex justify-center items-center h-[100svh]">
+        <div className="size-16">
+          <Spinner className="border-y-black" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="grid place-items-center h-full pt-16 flex-1 p-2">
