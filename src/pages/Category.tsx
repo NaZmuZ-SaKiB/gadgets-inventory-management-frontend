@@ -1,9 +1,10 @@
 import { useGetAllCategoriesQuery } from "@/redux/features/category/category.api";
 import { TCategory } from "@/types/category.interface";
 import AddCategory from "@/components/forms/AddCategory";
+import Spinner from "@/components/shared/Spinner";
 
 const CategoryPage = () => {
-  const { data, isLoading, isError } = useGetAllCategoriesQuery(undefined, {
+  const { data, isLoading } = useGetAllCategoriesQuery(undefined, {
     pollingInterval: 10000,
   });
   return (
@@ -16,8 +17,13 @@ const CategoryPage = () => {
         <div className="border rounded-lg p-4 mt-3">
           <h2 className="text-xl font-medium mb-5">Current Categories</h2>
           <div className="flex flex-wrap gap-2">
-            {!isLoading &&
-              !isError &&
+            {isLoading ? (
+              <div className="flex justify-center items-center w-full">
+                <div className="size-10">
+                  <Spinner className="border-y-black" />
+                </div>
+              </div>
+            ) : (
               data.data.map((category: TCategory) => (
                 <span
                   key={category._id.toString()}
@@ -25,7 +31,8 @@ const CategoryPage = () => {
                 >
                   {category.name.toLowerCase()}
                 </span>
-              ))}
+              ))
+            )}
           </div>
         </div>
       </div>
