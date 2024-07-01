@@ -30,7 +30,8 @@ const ProtectedRoute = ({
         if (data?.success && role.includes(data?.data?.role)) {
           dispatch(setUser(data.data));
         } else {
-          if (user) {
+          if (data?.success && user) {
+            console.log(data);
             toast.error("You are not allowed to visit this page!");
             navigate("/", { replace: true });
           } else {
