@@ -4,6 +4,20 @@ This is a Gadgets inventory management Frontend project. The goal of this projec
 
 ### [Live Site Link](https://gadget-inventory-management.netlify.app/)
 
+### Credentials
+
+`Admin:`
+`email:` boss@gmail.com
+`password:` superman
+
+`Manager:`
+`email:` sakib@gmail.com
+`password:` 11111111
+
+`User:`
+`email:` ananta@gmail.com
+`password:` 11111111
+
 ## Technology
 
 1.  ReactJS
