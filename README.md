@@ -1,6 +1,6 @@
 # Gadgets Inventroy Management Client
 
-This is a Gadgets inventory management Frontend project. The goal of this project is to design an electric gadgets management dashboard and manage products and sales. User can login and add products, sale the products, track their sales and view the products with a robust filterring system UI. Dashboard, Sale, Stock, Create User, Users and other pages behave dinamicly according to the logged in user's role. Full application is realtime. It refetch every data in every 10 seconds.
+This is a Gadgets inventory management Frontend project. The goal of this project is to design an electric gadgets management dashboard and manage products and sales. User can login and add products, sale the products, track their sales and view the products with a robust filterring system UI. Dashboard, Sale, Stock, Create User, Users and other pages behave dynamicly according to the logged in user's role. Full application is realtime. It refetch every data in every 10 seconds.
 
 ### [Live Site Link](https://gadget-inventory-management.netlify.app/)
 
@@ -40,9 +40,9 @@ This is a Gadgets inventory management Frontend project. The goal of this projec
 ### Installation
 
 1. Clone this repo:
-   - `git clone https://github.com/Porgramming-Hero-web-course/l2-b2-assignment-6-fronten-NaZmuZ-SaKiB.git`
+   - `git clone https://github.com/NaZmuZ-SaKiB/gadgets-inventory-management-frontend.git`
 2. Install all necessary dependencies:
-   - `l2-b2-assignment-6-fronten-NaZmuZ-SaKiB`
+   - `cd gadgets-inventory-management-frontend`
    - `npm install` or `yarn`
 3. Create a `.env` file in current directory and add following properties:
 
@@ -58,10 +58,10 @@ This is a Gadgets inventory management Frontend project. The goal of this projec
 
 ### Routes
 
-- **/** : Dashboard (Dinamic for user roles)
+- **/** : Dashboard (Dynamic for user roles)
 - **/login** : Login page
-- **/stock** : Inventory page with Filtering system and pagination (Dinamic for user roles)
-- **/sales** : Sales history page with pagination and option for daily, weekly, monthly and yearly sales. (Dinamic for user roles)
+- **/stock** : Inventory page with Filtering system and pagination (Dynamic for user roles)
+- **/sales** : Sales history page with pagination and option for daily, weekly, monthly and yearly sales. (Dynamic for user roles)
 - **/add-product** : Add product page
 - **/category** : Create new Category and see list of categories
 - **/brand** : Create new Brand and see list of brands
