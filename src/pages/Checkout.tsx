@@ -21,7 +21,9 @@ const CheckoutPage = () => {
               <CartItem key={item.product._id.toString()} item={item} />
             ))
           ) : (
-            <p className="text-center text-3xl py-5">Cart is empty</p>
+            <p className="text-center text-3xl py-5 bg-slate-50 text-slate-700 font-semibold">
+              Cart is empty
+            </p>
           )}
 
           {cart.length > 0 && (

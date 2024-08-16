@@ -4,6 +4,7 @@ import { useGetAllProductsQuery } from "@/redux/features/product/product.api";
 import { TProduct } from "@/types/product.interface";
 import { formatCurrency } from "@/utils/currencyFormat";
 import { useNavigate } from "react-router-dom";
+import { Search } from "lucide-react";
 
 const GlobalSerchbar = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -35,9 +36,12 @@ const GlobalSerchbar = () => {
   if (window.location.pathname.includes("product")) return null;
 
   return (
-    <div className="relative max-md:hidden">
+    <div className="relative max-md:hidden flex">
+      <span className="flex justify-center items-center px-1 bg-white text-sky-800">
+        <Search className="size-5" />
+      </span>
       <Input
-        className="h-8 min-w-[300px] text-slate-800 focus-visible:ring-transparent focus-visible:ring-offset-0 rounded-none"
+        className="h-8 min-w-[300px] text-slate-800 border-0 focus-visible:ring-transparent focus-visible:ring-offset-0 rounded-none"
         placeholder="Search Product..."
         onChange={(e) => setSerach(e.target.value)}
         onFocus={() => setOpen(true)}
@@ -49,7 +53,7 @@ const GlobalSerchbar = () => {
             className="fixed z-20 top-12 inset-0 bg-black bg-opacity-50"
             onClick={() => setOpen(false)}
           ></div>
-          <div className="absolute z-50 w-full bg-white shadow text-slate-700 text-sm">
+          <div className="absolute top-9 z-50 w-full bg-white shadow text-slate-700 text-sm">
             {isLoading ? (
               <div className="p-2">Loading...</div>
             ) : (

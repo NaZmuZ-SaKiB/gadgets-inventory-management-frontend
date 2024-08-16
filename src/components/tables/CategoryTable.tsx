@@ -23,7 +23,7 @@ const CategoryTable = () => {
             </thead>
 
             {isLoading && !data ? (
-              <TableLoader tdNumber={2} />
+              <TableLoader tdNumber={3} />
             ) : data?.data?.length > 0 ? (
               <tbody>
                 {data?.data?.map((category: TCategory) => {
