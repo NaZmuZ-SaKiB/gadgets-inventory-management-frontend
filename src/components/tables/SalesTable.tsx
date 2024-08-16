@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/pagination";
 import { Link } from "react-router-dom";
 import "@/styles/table.css";
+import { formatCurrency } from "@/utils/currencyFormat";
 
 type TFilters = {
   page: number;
@@ -70,7 +71,7 @@ const SalesTable = ({ filters, handleFilterChange }: TProps) => {
 
                       <td>{sale?.products?.length}</td>
 
-                      <td>{sale?.total}/-</td>
+                      <td>{formatCurrency(sale?.total)}</td>
                       <td>
                         {" "}
                         {new Date(sale?.dateOfSale).toLocaleDateString()}
@@ -160,32 +161,50 @@ const SaleModal = ({ sale, open, setOpen }: TModalProps) => {
   }
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[500px] max-h-[70vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Sale</DialogTitle>
         </DialogHeader>
-        <div className="ps-2">
-          <p>Buyer: {sale.buyerName}</p>
-          <p>Contact no: {sale.contactNo}</p>
-          <p>Date: {new Date(sale.dateOfSale).toLocaleDateString()}</p>
+        <div className="pl-2">
+          <div className="space-y-1">
+            <p>
+              <span className="font-semibold">Buyer:</span> {sale.buyerName}
+            </p>
+            <p>
+              <span className="font-semibold">Contact no:</span>{" "}
+              {sale.contactNo}
+            </p>
+            <p>
+              <span className="font-semibold">Date:</span>{" "}
+              {new Date(sale.dateOfSale).toLocaleDateString()}
+            </p>
+          </div>
           <hr className="mt-2 bg-black" />
           <DialogHeader className="my-4 -ms-2">
             <DialogTitle>Products</DialogTitle>
           </DialogHeader>
           {sale.products.map((item) => (
-            <div key={item.product._id.toString()} className="mt-3">
+            <div
+              key={item.product._id.toString()}
+              className="mt-3 text-sm bg-slate-50 rounded-md p-2"
+            >
               <Link to={`/products/${item.product._id}`}>
                 <h2 className="font-medium text-blue-500">
                   {item.product.name}
                 </h2>
               </Link>
-              <p>Quantity: {item.quantity}</p>
-              <p>Price: {item.price}/-</p>
+              <p>
+                <span className="font-semibold">Quantity:</span> {item.quantity}
+              </p>
+              <p>
+                <span className="font-semibold">Price:</span>{" "}
+                {formatCurrency(item.price)}
+              </p>
             </div>
           ))}
           <hr className="my-3 bg-black" />
           <p className="-ms-2">
-            <strong>Total Amount:</strong> {sale.total}/-
+            <strong>Total Amount:</strong> {formatCurrency(sale.total)}
           </p>
         </div>
       </DialogContent>

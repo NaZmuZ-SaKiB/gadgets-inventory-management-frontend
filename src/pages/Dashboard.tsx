@@ -41,15 +41,13 @@ const Dashboard = () => {
         <PurchasedCount />
       </div>
 
-      <div className="mt-5 flex gap-5 flex-wrap">
+      <div className="mt-5 flex gap-5 [&>*]:flex-1 [&>*]:basis-[300px] flex-wrap">
         <StockPieChart />
         <WeeklySalePieChart />
       </div>
 
-      <div className="mt-5">
+      <div className="mt-5 flex gap-5 [&>*]:flex-1 [&>*]:basis-[400px] flex-wrap">
         <DashboardBarChart />
-      </div>
-      <div className="mt-5">
         <DashboardLineChart />
       </div>
 

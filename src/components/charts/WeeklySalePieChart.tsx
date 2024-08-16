@@ -13,7 +13,7 @@ const WeeklySalePieChart = () => {
   const chartConfig = getWeeklySalePieChartConfig();
 
   return (
-    <div className="flex-1 basis-[300px]">
+    <div className="">
       <DashboardPieChart
         chartData={chartData}
         chartConfig={chartConfig}

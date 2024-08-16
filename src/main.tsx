@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <PersistGate persistor={persistor}>
         <RouterProvider router={router} />
       </PersistGate>
-      <Toaster />
+      <Toaster closeButton />
     </Provider>
   </StrictMode>
 );

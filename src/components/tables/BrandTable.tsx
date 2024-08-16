@@ -2,6 +2,7 @@ import { useGetAllBrandsQuery } from "@/redux/features/brand/brand.api";
 import TableLoader from "../Loaders/TableLoader";
 import { TBrand } from "@/types/brand.interface";
 import "@/styles/table.css";
+import UpdateBrandModel from "../modals/UpdateBrandModel";
 
 const BrandTable = () => {
   const { data, isLoading } = useGetAllBrandsQuery(undefined, {
@@ -16,7 +17,8 @@ const BrandTable = () => {
             <thead className="text-left">
               <tr>
                 <th>Name</th>
-                <th className="!text-center">Products</th>
+                <th>Products</th>
+                <th className="!text-center">Actions</th>
               </tr>
             </thead>
 
@@ -30,6 +32,13 @@ const BrandTable = () => {
                       <td>{brand?.name}</td>
 
                       <td className="text-center">{brand?.productCount}</td>
+
+                      <td className="text-center">
+                        <UpdateBrandModel
+                          id={brand?._id?.toString()}
+                          name={brand.name}
+                        />
+                      </td>
                     </tr>
                   );
                 })}

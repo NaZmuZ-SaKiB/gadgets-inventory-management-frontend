@@ -1,6 +1,7 @@
 import { useGetAllSalesQuery } from "@/redux/features/sale/sale.api";
 import { TSale } from "@/types/sale.interface";
 import { Skeleton } from "../ui/skeleton";
+import { formatCurrency } from "@/utils/currencyFormat";
 
 const LastSales = () => {
   const { data, isLoading } = useGetAllSalesQuery({
@@ -41,7 +42,9 @@ const LastSales = () => {
 
                 <span className="text-center">{sale.products.length}</span>
 
-                <span className="text-center">{sale.total}</span>
+                <span className="text-center">
+                  {formatCurrency(sale.total)}
+                </span>
                 <span className="text-right col-span-2">
                   {new Date(sale.dateOfSale).toLocaleDateString()}
                 </span>

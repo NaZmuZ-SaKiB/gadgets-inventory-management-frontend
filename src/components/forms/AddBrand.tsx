@@ -70,7 +70,11 @@ const AddBrand = () => {
             )}
           />
 
-          <Button disabled={form.formState.isSubmitting} type="submit">
+          <Button
+            disabled={form.formState.isSubmitting}
+            type="submit"
+            className="bg-sky-600 hover:bg-sky-700"
+          >
             Add Brand
           </Button>
         </form>

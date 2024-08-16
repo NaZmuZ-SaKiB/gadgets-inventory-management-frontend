@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Dispatch, SetStateAction } from "react";
 import ProfileDropDown from "../shared/ProfileDropDown";
+import GlobalSerchbar from "./GlobalSerchbar";
 
 type TProp = {
   hidden: boolean;
@@ -30,6 +31,9 @@ const TopBar = ({ hidden, setHidden }: TProp) => {
           <h1 className="font-semibold text-sky-50 text-xl">Admin Panel</h1>
         </Link>
       </div>
+
+      <GlobalSerchbar />
+
       <ProfileDropDown />
     </div>
   );

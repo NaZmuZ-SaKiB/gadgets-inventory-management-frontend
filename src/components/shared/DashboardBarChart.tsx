@@ -30,7 +30,7 @@ const DashboardBarChart = () => {
       <h2 className="text-center font-semibold text-slate-700 mb-5">
         Top Products
       </h2>
-      <ChartContainer config={chartConfig} className="max-h-[400px] w-full">
+      <ChartContainer config={chartConfig} className="max-h-[300px] w-full">
         <BarChart accessibilityLayer data={chartData}>
           <CartesianGrid vertical={false} />
           <XAxis

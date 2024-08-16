@@ -25,6 +25,7 @@ import { toast } from "sonner";
 import StockPagination from "../forms/StockPagination";
 import TableLoader from "../Loaders/TableLoader";
 import "@/styles/table.css";
+import { formatCurrency } from "@/utils/currencyFormat";
 
 type TProps = {
   handleSelect: (e: ChangeEvent<HTMLInputElement>, value: string) => void;
@@ -101,8 +102,8 @@ const StockTable = ({ handleSelect }: TProps) => {
 
                       <td>{product.quantity}</td>
 
-                      <td>{product.cost}/-</td>
-                      <td>{product.price}/-</td>
+                      <td>{formatCurrency(product.cost)}</td>
+                      <td>{formatCurrency(product.price)}</td>
                       <td>
                         <div className="flex justify-end gap-3">
                           <Link to={`/product/${product._id}`}>
@@ -128,7 +129,7 @@ const StockTable = ({ handleSelect }: TProps) => {
                           <Button
                             disabled={addedToCart ? true : false}
                             size="sm"
-                            className="bg-sky-600 hover:bg-sky-700"
+                            className="bg-sky-600 hover:bg-sky-700 disabled:opacity-70"
                             onClick={() =>
                               dispatch(
                                 addToCart({

@@ -2,6 +2,7 @@ import { useGetAllCategoriesQuery } from "@/redux/features/category/category.api
 import { TCategory } from "@/types/category.interface";
 import TableLoader from "../Loaders/TableLoader";
 import "@/styles/table.css";
+import UpdateCategoryModal from "../modals/UpdateCategoryModal";
 
 const CategoryTable = () => {
   const { data, isLoading } = useGetAllCategoriesQuery(undefined, {
@@ -16,7 +17,8 @@ const CategoryTable = () => {
             <thead className="text-left">
               <tr>
                 <th>Name</th>
-                <th className="!text-center">Products</th>
+                <th>Products</th>
+                <th className="!text-center">Actions</th>
               </tr>
             </thead>
 
@@ -30,6 +32,13 @@ const CategoryTable = () => {
                       <td>{category?.name}</td>
 
                       <td className="text-center">{category?.productCount}</td>
+
+                      <td className="text-center">
+                        <UpdateCategoryModal
+                          id={category?._id?.toString()}
+                          name={category.name}
+                        />
+                      </td>
                     </tr>
                   );
                 })}

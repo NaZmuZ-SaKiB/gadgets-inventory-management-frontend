@@ -26,7 +26,7 @@ const productApi = baseApi.injectEndpoints({
         url: `/products/${id}`,
         method: "GET",
       }),
-      providesTags: ["products"],
+      providesTags: (_result, _error, id) => [{ type: "products", id }],
     }),
 
     getStockCount: builder.query({

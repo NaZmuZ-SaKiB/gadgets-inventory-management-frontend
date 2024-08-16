@@ -29,7 +29,7 @@ const DashboardLineChart = () => {
     <div className="border border-slate-300 rounded-lg p-5">
       <h2 className="text-center font-semibold text-lg mb-3">Weekly Sales</h2>
       <div className="overflow-x-auto scrollbar-thin scrollbar-webkit">
-        <div className="min-w-[580px]">
+        <div className="min-w-[400px]">
           <ChartContainer config={chartConfig} className="max-h-[300px] w-full">
             <LineChart
               accessibilityLayer
