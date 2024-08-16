@@ -1,12 +1,16 @@
 import ProductStockCountCard from "@/components/cards/dashboard/ProductStockCountCard";
 import PurchasedCount from "@/components/cards/dashboard/PurchasedCount";
 import SalesCard from "@/components/cards/dashboard/SalesCard";
+import StockPieChart from "@/components/charts/StockPieChart";
+import WeeklySalePieChart from "@/components/charts/WeeklySalePieChart";
+import DashboardBarChart from "@/components/shared/DashboardBarChart";
+import DashboardLineChart from "@/components/shared/DashboardLineChart";
 import LastPurchased from "@/components/shared/LastPurchased";
 import LastSales from "@/components/shared/LastSales";
 
 const Dashboard = () => {
   return (
-    <div className="px-2 md:px-10 pt-16 mx-auto pb-10">
+    <div className="px-2 md:px-5 lg:px-10 pt-16 mx-auto pb-10">
       <h1 className="text-2xl font-semibold mb-2">Dashboard</h1>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-5">
         <SalesCard
@@ -36,10 +40,21 @@ const Dashboard = () => {
         />
         <PurchasedCount />
       </div>
-      <div className="xl:grid grid-cols-2 gap-3">
-        <LastSales />
-        <LastPurchased />
+
+      <div className="mt-5 flex gap-5 flex-wrap">
+        <StockPieChart />
+        <WeeklySalePieChart />
       </div>
+
+      <div className="mt-5">
+        <DashboardBarChart />
+      </div>
+      <div className="mt-5">
+        <DashboardLineChart />
+      </div>
+
+      <LastSales />
+      <LastPurchased />
     </div>
   );
 };

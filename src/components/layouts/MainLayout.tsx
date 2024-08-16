@@ -12,7 +12,7 @@ const MainLayout = () => {
       <TopBar hidden={sidebarHidden} setHidden={setSidebarHidden} />
       <main className="flex relative">
         <LeftSideBar hidden={sidebarHidden} setHidden={setSidebarHidden} />
-        <section className=" flex-1">
+        <section className="flex-1 overflow-x-hidden">
           <div className="w-full h-full mx-auto">
             <Outlet />
           </div>

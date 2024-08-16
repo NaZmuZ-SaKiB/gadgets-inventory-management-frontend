@@ -12,7 +12,7 @@ const SalesCard = ({
 }) => {
   const { data, isLoading } = useGetSalesCountQuery(
     { time },
-    { pollingInterval: 10000 }
+    { pollingInterval: 60000 }
   );
 
   return (

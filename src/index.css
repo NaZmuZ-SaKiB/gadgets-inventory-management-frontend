@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 .left-sidebar {
-  @apply pt-16 max-md:fixed bg-white sticky left-0 top-0 z-20 flex h-[100svh] w-fit flex-col justify-between overflow-auto border-r pb-5 px-3 transition-all;
+  @apply pt-12 max-md:fixed bg-sky-900 sticky left-0 top-0 z-20 flex h-[100svh] w-[180px] flex-col justify-between overflow-auto pb-5 transition-all;
 }
 
 .sidebar-toggle-icon {
-  @apply size-9 cursor-pointer hover:bg-gray-100 rounded-full p-1 md:hidden;
+  @apply size-9 cursor-pointer rounded-full p-1 md:hidden invert;
 }
 
 .filter-card {
@@ -32,12 +32,4 @@
   grid-template-columns: repeat(auto-fit, minmax(200px, 250px));
   gap: 0.5rem;
   justify-content: center;
-}
-
-@media (min-width: 1024px) {
-  .stock-filter-container-grid {
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    gap: 1rem;
-  }
 }

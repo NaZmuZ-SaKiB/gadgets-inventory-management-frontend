@@ -49,18 +49,18 @@ const AddBrand = () => {
 
   return (
     <>
-      <h1 className="text-2xl font-medium text-center mb-10">Add Brand</h1>
+      <h1 className="text-lg font-medium mb-3">Add Brand</h1>
 
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-5 w-full"
+          className="w-full flex gap-3 items-end flex-wrap"
         >
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex-1 basis-[200px]">
                 <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input placeholder="name" {...field} />

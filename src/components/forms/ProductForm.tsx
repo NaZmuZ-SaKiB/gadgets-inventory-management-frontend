@@ -109,13 +109,13 @@ const ProductForm = ({ product, type }: TProps) => {
 
   const { data: categories, isLoading: isCategoriesLoading } =
     useGetAllCategoriesQuery(undefined, {
-      pollingInterval: 10000,
+      pollingInterval: 60000,
     });
 
   const { data: brands, isLoading: isBrandsLoading } = useGetAllBrandsQuery(
     undefined,
     {
-      pollingInterval: 10000,
+      pollingInterval: 60000,
     }
   );
 
@@ -205,7 +205,12 @@ const ProductForm = ({ product, type }: TProps) => {
               <FormItem className="flex-1 min-w-32">
                 <FormLabel>Quantity</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="quantity" {...field} />
+                  <Input
+                    type="number"
+                    placeholder="quantity"
+                    {...field}
+                    min={1}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -586,7 +591,7 @@ const ProductForm = ({ product, type }: TProps) => {
         <Button
           disabled={form.formState.isSubmitting}
           type="submit"
-          className="w-full"
+          className="w-full bg-sky-600 hover:bg-sky-700"
         >
           {type === "update"
             ? "Save Changes"

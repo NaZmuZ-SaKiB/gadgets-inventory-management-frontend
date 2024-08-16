@@ -1,39 +1,18 @@
-import { useGetAllBrandsQuery } from "@/redux/features/brand/brand.api";
-import { TBrand } from "@/types/brand.interface";
 import AddBrand from "@/components/forms/AddBrand";
-import Spinner from "@/components/shared/Spinner";
+import BrandTable from "@/components/tables/BrandTable";
 
 const BrandPage = () => {
-  const { data, isLoading } = useGetAllBrandsQuery(undefined, {
-    pollingInterval: 10000,
-  });
   return (
-    <div className="grid place-items-center h-full pt-16 flex-1 p-2">
-      <div className="max-w-sm w-full">
-        <div className="border rounded-lg p-4">
-          <AddBrand />
-        </div>
+    <div className="pt-16 flex-1 p-2 max-w-screen-xl mx-auto">
+      <h1 className="text-2xl font-semibold mb-3">Brand</h1>
 
-        <div className="border rounded-lg p-4 mt-3">
-          <h2 className="text-xl font-medium mb-5">Current Brands</h2>
-          <div className="flex flex-wrap gap-2">
-            {isLoading ? (
-              <div className="flex justify-center items-center w-full">
-                <div className="size-10">
-                  <Spinner className="border-y-black" />
-                </div>
-              </div>
-            ) : (
-              data.data.map((brand: TBrand) => (
-                <span
-                  key={brand._id.toString()}
-                  className="border border-gray-500 text-sm px-2 py-0.5 rounded-3xl capitalize"
-                >
-                  {brand.name.toLowerCase()}
-                </span>
-              ))
-            )}
-          </div>
+      <div className="border rounded-lg p-4">
+        <AddBrand />
+      </div>
+
+      <div className="border rounded-lg p-2 mt-3">
+        <div>
+          <BrandTable />
         </div>
       </div>
     </div>

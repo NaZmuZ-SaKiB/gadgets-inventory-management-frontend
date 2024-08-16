@@ -93,8 +93,8 @@ const AuthenticationPage = () => {
 
   return (
     <div className="grid place-items-center w-full min-h-[100svh] p-2">
-      <div className="max-w-sm w-full border rounded-lg p-4">
-        <h1 className="text-2xl font-medium text-center mb-10">
+      <div className="max-w-sm w-full bg-sky-50 rounded-lg p-4">
+        <h1 className="text-2xl text-sky-600 font-semibold text-center mb-10">
           {isLoginPage ? "Login" : "Create User"}
         </h1>
         <Form {...form}>
@@ -176,9 +176,63 @@ const AuthenticationPage = () => {
               )}
             />
 
-            <Button disabled={form.formState.isSubmitting} type="submit">
+            <Button
+              disabled={form.formState.isSubmitting}
+              type="submit"
+              className="bg-sky-600 hover:bg-sky-700"
+            >
               {isLoginPage ? "Login" : "Create User"}
             </Button>
+
+            {isLoginPage && (
+              <div>
+                <p className="text-center font-semibold">Test Login</p>
+
+                <div className="mt-3 flex justify-center flex-wrap gap-3">
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    disabled={form.formState.isSubmitting}
+                    className="px-2 h-8 bg-transparent border-sky-600 text-sky-600 hover:bg-sky-50 hover:text-sky-700 disabled:opacity-50"
+                    onClick={() => {
+                      form.setValue("email", "ananta@gmail.com");
+                      form.setValue("password", "11111111");
+                      form.handleSubmit(onSubmit)();
+                    }}
+                  >
+                    Sales Man Login
+                  </Button>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    disabled={form.formState.isSubmitting}
+                    className="px-2 h-8 bg-transparent border-sky-600 text-sky-600 hover:bg-sky-50 hover:text-sky-700 disabled:opacity-50"
+                    onClick={() => {
+                      form.setValue("email", "sakib@gmail.com");
+                      form.setValue("password", "11111111");
+                      form.handleSubmit(onSubmit)();
+                    }}
+                  >
+                    Manager Login
+                  </Button>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    className="px-2 h-8 bg-transparent border-sky-600 text-sky-600 hover:bg-sky-50 hover:text-sky-700"
+                    onClick={() => {
+                      form.setValue("email", "boss@gmail.com");
+                      form.setValue("password", "superman");
+                      form.handleSubmit(onSubmit)();
+                    }}
+                  >
+                    Admin Login
+                  </Button>
+                </div>
+              </div>
+            )}
           </form>
         </Form>
       </div>

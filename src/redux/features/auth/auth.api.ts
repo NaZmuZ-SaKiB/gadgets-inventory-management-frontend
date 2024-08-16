@@ -52,6 +52,13 @@ const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["users"],
     }),
+
+    getDashboardChartsData: builder.query({
+      query: () => ({
+        url: "/users/chart-data",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -62,4 +69,5 @@ export const {
   useLogoutMutation,
   useGetAllUsersQuery,
   useAssignManagerMutation,
+  useGetDashboardChartsDataQuery,
 } = authApi;

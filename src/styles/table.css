@@ -1,0 +1,24 @@
+@import "tailwindcss/components";
+
+@layer components {
+  .admin-table {
+    @apply w-full;
+  }
+
+  .admin-table tbody {
+    @apply text-slate-700 text-sm;
+  }
+
+  .admin-table th {
+    @apply bg-sky-700 text-white text-sm font-normal border-sky-50 last:text-right;
+  }
+
+  .admin-table td,
+  .admin-table th {
+    @apply px-3 py-2 border border-collapse;
+  }
+
+  .admin-table tr:nth-child(even) {
+    @apply bg-slate-100;
+  }
+}

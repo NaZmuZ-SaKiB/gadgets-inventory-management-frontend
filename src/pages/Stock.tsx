@@ -1,8 +1,6 @@
 import { ChangeEvent, useState } from "react";
 
-import ProductCard from "@/components/cards/ProductCard";
 import ProductsTopBar from "@/components/forms/ProductsTopBar";
-import StockPagination from "@/components/forms/StockPagination";
 import Filters from "@/components/shared/Filters";
 
 import {
@@ -12,12 +10,10 @@ import {
 } from "@/redux/features/product/product.slice";
 import { useGetAllBrandsQuery } from "@/redux/features/brand/brand.api";
 import { useGetAllCategoriesQuery } from "@/redux/features/category/category.api";
-import { useGetAllProductsQuery } from "@/redux/features/product/product.api";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
 
 import { TBrand } from "@/types/brand.interface";
 import { TCategory } from "@/types/category.interface";
-import { TProduct } from "@/types/product.interface";
 
 import {
   Select,
@@ -27,12 +23,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Skeleton } from "@/components/ui/skeleton";
+import StockTable from "@/components/tables/StockTable";
 
 const StockPage = () => {
   const [showFilters, setShowFilders] = useState<boolean>(false);
 
-  const filter = useAppSelector((state) => state.product.filter);
   const dispatch = useAppDispatch();
 
   const handleSelectedProducts = (
@@ -48,19 +43,15 @@ const StockPage = () => {
 
   const { data: categories, isLoading: isCategoriesLoading } =
     useGetAllCategoriesQuery(undefined, {
-      pollingInterval: 10000,
+      pollingInterval: 60000,
     });
 
   const { data: brands, isLoading: isBrandsLoading } = useGetAllBrandsQuery(
     undefined,
     {
-      pollingInterval: 10000,
+      pollingInterval: 60000,
     }
   );
-
-  const { currentData, isFetching } = useGetAllProductsQuery(filter, {
-    pollingInterval: 10000,
-  });
 
   return (
     <div className="p-2 pt-16 max-sm:pt-14 relative">
@@ -121,37 +112,12 @@ const StockPage = () => {
         </div>
       </div>
 
-      <div className="stock-filter-container-grid">
+      <div className="grid lg:grid-cols-[250px_1fr]">
         <Filters show={showFilters} setShow={setShowFilders} />
-        <div className="">
+        <div className="overflow-x-auto scrollbar-thin scrollbar-webkit">
           <ProductsTopBar show={showFilters} setShow={setShowFilders} />
-          <div className="mt-3 stock-grid">
-            {isFetching && !currentData ? (
-              Array(9)
-                .fill(0)
-                .map((_, index) => (
-                  <Skeleton
-                    key={`product-card-loading-${index}`}
-                    className="h-60"
-                  />
-                ))
-            ) : currentData?.data?.products?.length > 0 ? (
-              currentData?.data?.products?.map((product: TProduct) => (
-                <ProductCard
-                  product={product}
-                  handleSelect={handleSelectedProducts}
-                  key={product._id.toString()}
-                />
-              ))
-            ) : (
-              <div className="mt-10 text-center border-2 p-3 text-lg font-semibold border-black">
-                Stock is empty
-              </div>
-            )}
-          </div>
-          {!isFetching && currentData?.data?.products?.length > 0 && (
-            <StockPagination total={currentData?.data?.total} />
-          )}
+
+          <StockTable handleSelect={handleSelectedProducts} />
         </div>
       </div>
     </div>

@@ -48,18 +48,18 @@ const AddCategory = () => {
   };
   return (
     <>
-      <h1 className="text-2xl font-medium text-center mb-10">Add Category</h1>
+      <h1 className="text-lg font-medium mb-3">Add New Category</h1>
 
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-5 w-full"
+          className="w-full flex gap-3 items-end flex-wrap"
         >
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex-1 basis-[200px]">
                 <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input placeholder="name" {...field} />
@@ -69,7 +69,11 @@ const AddCategory = () => {
             )}
           />
 
-          <Button disabled={form.formState.isSubmitting} type="submit">
+          <Button
+            disabled={form.formState.isSubmitting}
+            type="submit"
+            className="bg-sky-600 hover:bg-sky-700"
+          >
             Add Category
           </Button>
         </form>
