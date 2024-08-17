@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import baseApi from "@/redux/api/baseApi";
+import { TUser } from "@/types/user.interface";
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -45,6 +47,23 @@ const authApi = baseApi.injectEndpoints({
       providesTags: ["users"],
     }),
 
+    getUserById: builder.query({
+      query: (id: string) => ({
+        url: `/users/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
+
+    updateUser: builder.mutation({
+      query: (data: { id: string; user: TUser }) => ({
+        url: `/users/${data.id}`,
+        method: "PATCH",
+        body: data.user,
+      }),
+      invalidatesTags: ["user"],
+    }),
+
     assignManager: builder.mutation({
       query: (id: string) => ({
         url: `/users/assign-manager/${id}`,
@@ -70,4 +89,6 @@ export const {
   useGetAllUsersQuery,
   useAssignManagerMutation,
   useGetDashboardChartsDataQuery,
+  useGetUserByIdQuery,
+  useUpdateUserMutation,
 } = authApi;

@@ -33,8 +33,6 @@ const GlobalSerchbar = () => {
     limit: 5,
   });
 
-  if (window.location.pathname.includes("product")) return null;
-
   return (
     <div className="relative max-md:hidden flex">
       <span className="flex justify-center items-center px-1 bg-white text-sky-800">

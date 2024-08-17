@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -53,12 +53,13 @@ import { Calendar } from "@/components/ui/calendar";
 
 type TProps = {
   product?: TProduct;
+  defaultValues: any;
   type: "add" | "update" | "duplicate";
 };
 
 type TFormSchema = z.infer<typeof productValidationSchema>;
 
-const ProductForm = ({ product, type }: TProps) => {
+const ProductForm = ({ product, type, defaultValues }: TProps) => {
   const [selectedConnectivities, setConnectivities] = useState<string[]>(
     product?.connectivity || []
   );
@@ -80,32 +81,17 @@ const ProductForm = ({ product, type }: TProps) => {
       setter(array);
     }
   };
-  const navigate = useNavigate();
 
-  const defaultValues = {
-    name: product?.name || "",
-    model: product?.model || "",
-    quantity: product?.quantity || 0,
-    cost: product?.cost || 0,
-    price: product?.price || 0,
-    imgUrl: product?.imgUrl || "",
-    description: product?.description || "",
-    releaseDate: product?.releaseDate
-      ? new Date(product.releaseDate)
-      : undefined,
-    camera: product?.camera || undefined,
-    weight: product?.weight || undefined,
-    displaySize: product?.displaySize || undefined,
-    operatingSystem: product?.operatingSystem || undefined,
-    powerSource: product?.powerSource || undefined,
-    category: product?.category || undefined,
-    brand: product?.brand || undefined,
-  };
+  const navigate = useNavigate();
 
   const form = useForm<TFormSchema>({
     defaultValues,
     resolver: zodResolver(productValidationSchema),
   });
+
+  useEffect(() => {
+    form.reset(defaultValues);
+  }, [defaultValues, form]);
 
   const { data: categories, isLoading: isCategoriesLoading } =
     useGetAllCategoriesQuery(undefined, {
@@ -202,7 +188,7 @@ const ProductForm = ({ product, type }: TProps) => {
             control={form.control}
             name="quantity"
             render={({ field }) => (
-              <FormItem className="flex-1 min-w-32">
+              <FormItem className="flex-1 min-w-[250px]">
                 <FormLabel>Quantity</FormLabel>
                 <FormControl>
                   <Input
@@ -221,7 +207,7 @@ const ProductForm = ({ product, type }: TProps) => {
             control={form.control}
             name="cost"
             render={({ field }) => (
-              <FormItem className="flex-1 min-w-32">
+              <FormItem className="flex-1 min-w-[250px]">
                 <FormLabel>Cost</FormLabel>
                 <FormControl>
                   <Input type="number" placeholder="cost" {...field} />
@@ -235,7 +221,7 @@ const ProductForm = ({ product, type }: TProps) => {
             control={form.control}
             name="price"
             render={({ field }) => (
-              <FormItem className="flex-1 min-w-32">
+              <FormItem className="flex-1 min-w-[250px]">
                 <FormLabel>Price</FormLabel>
                 <FormControl>
                   <Input type="number" placeholder="price" {...field} />
@@ -544,7 +530,7 @@ const ProductForm = ({ product, type }: TProps) => {
               control={form.control}
               name="weight"
               render={({ field }) => (
-                <FormItem className="flex-1 min-w-32">
+                <FormItem className="flex-1 min-w-[250px]">
                   <FormLabel>Weight in kg (optional)</FormLabel>
                   <FormControl>
                     <Input type="number" placeholder="weight" {...field} />
@@ -558,7 +544,7 @@ const ProductForm = ({ product, type }: TProps) => {
               control={form.control}
               name="camera"
               render={({ field }) => (
-                <FormItem className="flex-1 min-w-32">
+                <FormItem className="flex-1 min-w-[250px]">
                   <FormLabel>Camera (optional)</FormLabel>
                   <FormControl>
                     <Input type="number" placeholder="camera" {...field} />
@@ -572,7 +558,7 @@ const ProductForm = ({ product, type }: TProps) => {
               control={form.control}
               name="displaySize"
               render={({ field }) => (
-                <FormItem className="flex-1 min-w-32">
+                <FormItem className="flex-1 min-w-[250px]">
                   <FormLabel>Display (optional)</FormLabel>
                   <FormControl>
                     <Input

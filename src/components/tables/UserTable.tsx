@@ -16,6 +16,8 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import "@/styles/table.css";
+import { Link } from "react-router-dom";
+import { Button } from "../ui/button";
 
 type TProps = {
   filters: {
@@ -75,7 +77,20 @@ const UserTable = ({ filters, setFilters }: TProps) => {
 
                       <td>{user?.email}</td>
                       <td>{user?.role}</td>
-                      <td className="text-right">
+                      <td className="flex justify-end gap-2">
+                        <Link to={`/profile/edit/${user?._id}`}>
+                          <Button
+                            size="icon"
+                            variant="outline"
+                            className="h-8 w-8"
+                          >
+                            <img
+                              className="size-5"
+                              src="/assets/icons/edit.svg"
+                              alt="edit"
+                            />
+                          </Button>
+                        </Link>
                         <button
                           onClick={() =>
                             handleAssignManager(user._id.toString())
